@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Изменить параметры животного</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<br>
+    <h1>Изменить параметры животного</h1>
+    <form th:action="@{/products/edit/}" th:object="${product}" method="post"></form>
+    <input hidden th:field="*{id}"/>
+<br>
+typeOfAnimal: <input th:field="*{typeOfAnimal}"/>
+<br>
+breed:<input th:field="*{breed}"/>
+<br>
+nickname:<input th:field="*{nickname}"/>
+<br>
+age:<input th:field="*{age}"/>
+<br>
+price:<input th:field="*{price}"/>
+<br>
+<input type="submit" value="Сохранить"/>
+</body>
+</html>
