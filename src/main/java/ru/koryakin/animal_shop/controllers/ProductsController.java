@@ -9,32 +9,25 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.koryakin.animal_shop.entities.Product;
 import ru.koryakin.animal_shop.service.ProductService;
+import ru.koryakin.animal_shop.utils.ProductFilter;
 
-import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/products")
 public class ProductsController {
-    private ProductService productsService;
-
+    private ProductService productService;
 
     @Autowired
-    public ProductsController(ProductService productsService) {
-        this.productsService = productsService;
+    public ProductsController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping
-    public String showAll(Model model, @RequestParam Map<String, String> requestParams, @RequestParam(name = "categories", required = false) List<Long> categoriesIds) {
+    public String showAll(Model model, @RequestParam Map<String, String> requestParams) {
         Integer pageNumber = Integer.parseInt(requestParams.getOrDefault("p", "1"));
-
-        List<Category> categoriesFilter = null;
-        if (categoriesIds != null) {
-            categoriesFilter = categoriesService.getCategoriesByIds(categoriesIds);
-        }
-        ProductFilter productFilter = new ProductFilter(requestParams, categoriesFilter);
-
-        Page<Product> products = productsService.findAll(productFilter.getSpec(), pageNumber);
+        ProductFilter productFilter = new ProductFilter(requestParams);
+        Page<Product> products = productService.findAll(productFilter.getSpec(), pageNumber);
         model.addAttribute("products", products);
         model.addAttribute("filterDef", productFilter.getFilterDefinition().toString());
         return "all_products";
@@ -47,19 +40,19 @@ public class ProductsController {
 
     @PostMapping("/add")
     public String saveNewProduct(@ModelAttribute Product product) {
-        productsService.saveOrUpdate(product);
+        productService.saveOrUpdate(product);
         return "redirect:/products/";
     }
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        model.addAttribute("product", productsService.findById(id));
+        model.addAttribute("product", productService.findById(id));
         return "edit_product_form";
     }
 
     @PostMapping("/edit")
     public String modifyProduct(@ModelAttribute Product product) {
-        productsService.saveOrUpdate(product);
+        productService.saveOrUpdate(product);
         return "redirect:/products/";
     }
 }
