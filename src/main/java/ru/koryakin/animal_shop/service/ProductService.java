@@ -7,33 +7,35 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.koryakin.animal_shop.entities.Product;
 import ru.koryakin.animal_shop.exeptions.ProductNotFoundException;
-import ru.koryakin.animal_shop.repository.ProductRepository;
-
+import ru.koryakin.animal_shop.repository.ProductsRepository;
 
 import java.util.List;
 
 @Service
 public class ProductService {
 
-    private ProductRepository productRepository;
+    private ProductsRepository productsRepository;
+
+    public ProductService() {
+    }
 
     @Autowired
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductService(ProductsRepository productsRepository) {
+        this.productsRepository = productsRepository;
     }
 
-    public Product saveOrUpdate (Product product) {return productRepository.save(product);}
+    public Product saveOrUpdate (Product product) {return productsRepository.save(product);}
 
     public Product findById (Long id) {
-        return productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Can't found product with id"));
+        return productsRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Can't found product with id"));
     }
 
-    public List <Product> findAll () {return productRepository.findAll();}
+    public List <Product> findAll () {return productsRepository.findAll();}
 
     public Page <Product> findAll (Specification<Product> spec, Integer page) {
         if (page < 1L) {
             page = 1;
         }
-        return productRepository.findAll (spec, PageRequest.of(page-1, 10));
+        return productsRepository.findAll (spec, PageRequest.of(page-1, 10));
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public class BuyerService {
     private BuyersRepository buyersRepository;
 
-    @Autowired
+//    @Autowired
     public void setBuyersRepository(BuyersRepository buyersRepository) {
         this.buyersRepository = buyersRepository;
     }

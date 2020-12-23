@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import ru.koryakin.animal_shop.entities.Product;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
+public interface ProductsRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
 }

@@ -11,7 +11,10 @@ import java.util.List;
 public class SellerService {
     private SellersRepository sellersRepository;
 
-//    @Autowired
+    public SellerService() {
+    }
+
+    //    @Autowired
     public void setSellersRepository(SellersRepository sellersRepository) {
         this.sellersRepository = sellersRepository;
     }
